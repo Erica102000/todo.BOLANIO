@@ -5,74 +5,106 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let todos = [];
 
+    // Function to render the to-do list
     function renderTodos() {
         todoList.innerHTML = '';
         todos.forEach((todo, index) => {
             const li = document.createElement('li');
+            li.className = todo.done ? 'completed' : '';
             li.innerHTML = `
-                ${todo}
-                <button class="edit-button" data-index="${index}">Edit</button>
-                <button class="delete-button" data-index="${index}">Delete</button>
+                <input type="checkbox" ${todo.done ? 'checked' : ''} data-index="${index}" class="checkbox">
+                ${todo.text}
+                <div>
+                    <button class="edit-button" data-index="${index}">Edit</button>
+                    <button class="delete-button" data-index="${index}">Delete</button>
+                </div>
             `;
             todoList.appendChild(li);
         });
     }
 
+    // Function to add a new to-do
     function addTodo() {
-        const newTodo = todoInput.value.trim();
-        if (newTodo) {
-            todos.push(newTodo);
+        const newTodoText = todoInput.value.trim();
+        if (newTodoText) {
+            todos.push({ text: newTodoText, done: false });
             todoInput.value = '';
             renderTodos();
         } else {
-            swal("Error", "Please enter a to-do", "error");
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please enter a to-do.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         }
     }
 
+    // Function to edit a to-do
     function editTodo(index) {
-        swal({
-            text: "Edit your to-do:",
-            content: "input",
-            button: {
-                text: "Save",
-                closeModal: false
+        Swal.fire({
+            title: 'Edit your to-do',
+            input: 'text',
+            inputValue: todos[index].text,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            cancelButtonText: 'Cancel',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'You need to write something!';
+                }
             }
-        }).then(newTodo => {
-            if (newTodo) {
-                todos[index] = newTodo;
+        }).then(result => {
+            if (result.isConfirmed) {
+                todos[index].text = result.value;
                 renderTodos();
             }
         });
     }
 
+    // Function to delete a to-do
     function deleteTodo(index) {
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this to-do!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to recover this to-do!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, keep it'
+        }).then(result => {
+            if (result.isConfirmed) {
                 todos.splice(index, 1);
                 renderTodos();
-                swal("Poof! Your to-do has been deleted!", {
-                    icon: "success",
-                });
+                Swal.fire(
+                    'Deleted!',
+                    'Your to-do has been deleted.',
+                    'success'
+                );
             }
         });
     }
 
+    // Function to toggle the "done" state of a to-do
+    function toggleDone(index) {
+        todos[index].done = !todos[index].done;
+        renderTodos();
+    }
+
+    // Event listener for the Add button
     addButton.addEventListener('click', addTodo);
 
+    // Event listener for the Edit, Delete buttons and Checkboxes in the to-do list
     todoList.addEventListener('click', (e) => {
         const index = e.target.getAttribute('data-index');
         if (e.target.classList.contains('edit-button')) {
             editTodo(index);
         } else if (e.target.classList.contains('delete-button')) {
             deleteTodo(index);
+        } else if (e.target.classList.contains('checkbox')) {
+            toggleDone(index);
         }
     });
 
+    // Initial render of the to-do list
     renderTodos();
 });
