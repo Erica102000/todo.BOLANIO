@@ -4,30 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: auto;
+        }
+        .container {
+            width: 300px;
+            margin: 0 auto;
             padding: 20px;
         }
-        .todo-item {
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+            align-items: center;
         }
-        .todo-item button {
-            margin-left: 10px;
+        button {
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .edit-button {
+            background-color: #f0ad4e;
+            color: white;
+        }
+        .delete-button {
+            background-color: #d9534f;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <h1>To-Do List</h1>
-    <input type="text" id="taskInput" placeholder="Enter a new task">
-    <button onclick="addTask()">Add Task</button>
-    <ul id="taskList"></ul>
-
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="new-todo" placeholder="New To-Do">
+        <button id="add-todo">Add</button>
+        <ul id="todo-list"></ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
