@@ -4,51 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
         .container {
-            width: 300px;
-            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            margin: 0;
+            padding-bottom: 15px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: calc(100% - 100px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+        }
+        #add-todo {
+            background-color: #28a745;
+        }
+        #add-todo:hover {
+            background-color: #218838;
         }
         ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
         li {
             padding: 10px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             border: 1px solid #ddd;
+            border-radius: 4px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-        button {
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
+            justify-content: space-between;
+            background-color: #fafafa;
         }
         .edit-button {
-            background-color: #f0ad4e;
-            color: white;
+            background-color: #9e00fa;
         }
         .delete-button {
-            background-color: #d9534f;
-            color: white;
+            background-color: #dc3545;
+        }
+        .edit-button:hover, .delete-button:hover {
+            opacity: 0.8;
+        }
+        .checkbox {
+            margin-right: 10px;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>To-Do List</h1>
-        <input type="text" id="new-todo" placeholder="New To-Do">
-        <button id="add-todo">Add</button>
+        <div style="display: flex; margin-bottom: 20px;">
+            <input type="text" id="new-todo" placeholder="New To-Do">
+            <button id="add-todo">Add</button>
+        </div>
         <ul id="todo-list"></ul>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="app.js"></script>
 </body>
 </html>
